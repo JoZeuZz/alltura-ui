@@ -1,0 +1,40 @@
+{
+  "name": "@alltura/shell",
+  "version": "1.0.0",
+  "description": "Alltura shared shell — layout, auth, notifications, tour",
+  "main": "./dist/alltura-shell.es.js",
+  "module": "./dist/alltura-shell.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/alltura-shell.es.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist", "src"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "react-router-dom": ">=6",
+    "@tanstack/react-query": ">=5"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "date-fns": "^4.1.0",
+    "focus-trap-react": "^11.0.4",
+    "jwt-decode": "^4.0.0",
+    "react-hot-toast": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.8",
+    "@vitejs/plugin-react": "^4.7.0"
+  }
+}
