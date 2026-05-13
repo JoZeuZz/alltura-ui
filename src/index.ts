@@ -19,7 +19,9 @@ export { default as TourOverlay } from './components/TourOverlay';
 export { default as AppLayout } from './layout/AppLayout';
 export type { NavItem } from './layout/AppLayout';
 export { Container, Section } from './layout/Container';
+export type { ContainerProps, SectionProps, ContainerVariant } from './layout/Container';
 export { ResponsiveGrid, CustomGrid } from './layout/ResponsiveGrid';
+export type { ResponsiveGridProps, CustomGridProps, GridVariant, GridGap } from './layout/ResponsiveGrid';
 export { default as ResponsiveTable } from './layout/ResponsiveTable';
 export type { ResponsiveTableProps, TableColumn } from './layout/ResponsiveTable';
 

@@ -11,7 +11,7 @@ export interface ShellUser {
   [key: string]: unknown;
 }
 
-interface AuthContextType {
+export interface AuthContextType {
   user: ShellUser | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<boolean>;

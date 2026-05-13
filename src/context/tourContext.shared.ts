@@ -4,7 +4,7 @@ import type { TourRole, TourStep } from '../utils/tourSteps';
 export type StopReason = 'completed' | 'skipped' | 'dismissed';
 export type TourMode = 'onboarding' | 'contextual';
 
-interface TourContextValue {
+export interface TourContextValue {
   isActive: boolean;
   role: TourRole | null;
   steps: TourStep[];

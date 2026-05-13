@@ -1,12 +1,14 @@
 {
-  "name": "@alltura/shell",
+  "name": "@jozeuZz/alltura-ui",
   "version": "1.0.0",
-  "description": "Alltura shared shell — layout, auth, notifications, tour",
-  "main": "./dist/alltura-shell.mjs",
-  "module": "./dist/alltura-shell.mjs",
+  "description": "Alltura shared UI — layout, auth, notifications, tour",
+  "main": "./dist/alltura-ui.mjs",
+  "module": "./dist/alltura-ui.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/alltura-shell.mjs"
+      "import": "./dist/alltura-ui.mjs",
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
@@ -14,8 +16,11 @@
     "src"
   ],
   "sideEffects": false,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && tsc --project tsconfig.build.json",
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {

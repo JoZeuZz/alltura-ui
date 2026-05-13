@@ -6,8 +6,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.ts',
-      name: 'AllturaShell',
-      fileName: 'alltura-shell',
+      name: 'AllturaUi',
+      fileName: 'alltura-ui',
       formats: ['es'],
     },
     rollupOptions: {
