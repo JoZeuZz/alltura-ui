@@ -31,16 +31,31 @@ Add to `tailwind.config.js` content:
 "./node_modules/@jozeuZz/alltura-ui/src/**/*.{js,jsx,ts,tsx}"
 ```
 
-## Local development (monorepo)
+## CI / CD (Coolify or any Docker-based pipeline)
 
-When working inside `herramientas/`, the package is installed via `file:` path — no registry needed:
+The consumer app must commit an `.npmrc` with an env-var token reference (no secret in source):
 
-```json
-// frontend/package.json
-"@jozeuZz/alltura-ui": "file:../../alltura-ui"
+```
+@jozeuZz:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
 ```
 
-Vitest resolves directly to source for per-module mocking:
+Then add `NODE_AUTH_TOKEN=<ghp_token>` as an environment variable in Coolify (or equivalent CI secret). The token needs `read:packages` scope.
+
+**Do not** use `file:../../alltura-ui` in `package.json` for deployed apps — the path does not exist inside the Docker build context and will cause `npm ci` to fail.
+
+## Local development (monorepo)
+
+`herramientas/frontend` uses the registry version (`^1.0.x`) everywhere, including locally. The global `~/.npmrc` provides the auth token for local installs.
+
+To work on `alltura-ui` source and see changes live without publishing, use npm link:
+
+```bash
+cd /home/proyectos/alltura-ui && npm link
+cd /home/proyectos/herramientas/frontend && npm link @jozeuZz/alltura-ui
+```
+
+Vitest resolves directly to source for per-module mocking (unchanged):
 
 ```ts
 // frontend/vite.config.ts (test.alias)
