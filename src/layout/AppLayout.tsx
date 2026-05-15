@@ -55,8 +55,6 @@ const getRoleLabel = (role?: string | null) => {
 const darkFocusRing =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-1 focus-visible:ring-offset-[#1E2A4A]';
 
-const lightFocusRing =
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2';
 
 export interface NavItem {
   to?: string;
@@ -361,7 +359,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
         {/* Header */}
         <header
           data-tour="app-shell-header"
-          className="bg-surface text-content-primary flex items-center gap-[var(--shell-header-gap)] sm:gap-[var(--shell-header-gap-sm)] px-[var(--shell-header-px)] sm:px-[var(--shell-header-px-sm)] md:px-[var(--shell-header-px-md)] h-16 z-30 shadow-sm border-b border-edge flex-shrink-0 min-w-0"
+          className="bg-primary text-white flex items-center gap-[var(--shell-header-gap)] sm:gap-[var(--shell-header-gap-sm)] px-[var(--shell-header-px)] sm:px-[var(--shell-header-px-sm)] md:px-[var(--shell-header-px-md)] h-16 z-30 border-b border-white/10 flex-shrink-0 min-w-0"
         >
           {/* Mobile sidebar toggle */}
           <button
@@ -370,7 +368,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
             aria-label={isSidebarOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
             aria-expanded={isSidebarOpen}
             aria-controls="sidebar-nav"
-            className={`lg:hidden p-2 rounded-lg text-content-secondary hover:text-content-primary hover:bg-surface-overlay transition-colors duration-150 flex-shrink-0 ${lightFocusRing}`}
+            className={`lg:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors duration-150 flex-shrink-0 ${darkFocusRing}`}
           >
             <MenuIcon aria-hidden="true" />
           </button>
@@ -403,7 +401,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
             data-tour="app-shell-header-actions"
           >
             <div
-              className={`p-[var(--shell-header-bell-p)] sm:p-[var(--shell-header-bell-p-sm)] rounded-lg hover:bg-surface-overlay transition-colors duration-150`}
+              className={`p-[var(--shell-header-bell-p)] sm:p-[var(--shell-header-bell-p-sm)] rounded-lg hover:bg-white/10 transition-colors duration-150`}
               data-tour="app-shell-notifications"
             >
               {/* NotificationBell renders its own focusable button with focus ring */}
@@ -420,9 +418,9 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
               aria-expanded={isProfileMenuOpen}
               aria-haspopup="menu"
               aria-controls="profile-dropdown"
-              className={`flex items-center gap-[var(--shell-header-profile-gap)] sm:gap-[var(--shell-header-profile-gap-sm)] rounded-lg px-[var(--shell-header-profile-px)] sm:px-[var(--shell-header-profile-px-sm)] py-1.5 hover:bg-surface-overlay transition-colors duration-150 max-w-[11.5rem] sm:max-w-none ${lightFocusRing}`}
+              className={`flex items-center gap-[var(--shell-header-profile-gap)] sm:gap-[var(--shell-header-profile-gap-sm)] rounded-lg px-[var(--shell-header-profile-px)] sm:px-[var(--shell-header-profile-px-sm)] py-1.5 hover:bg-white/10 transition-colors duration-150 max-w-[11.5rem] sm:max-w-none ${darkFocusRing}`}
             >
-                <div className="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 overflow-hidden flex items-center justify-center ring-2 ring-primary/20">
+                <div className="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 overflow-hidden flex items-center justify-center ring-2 ring-white/20">
                 {user.profile_picture_url ? (
                   <img src={user.profile_picture_url} alt="" className="w-full h-full object-cover" />
                 ) : (
@@ -442,12 +440,12 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
                   </svg>
                 )}
               </div>
-              <span className="hidden lg:block text-sm font-medium max-w-[9rem] xl:max-w-[10rem] truncate">
+              <span className="hidden lg:block text-sm font-medium text-white max-w-[9rem] xl:max-w-[10rem] truncate">
                 {formatNameParts(user?.first_name, user?.last_name)}
               </span>
               <ChevronDownIcon
                 aria-hidden="true"
-                className={`hidden sm:block text-content-muted transition-transform duration-200 motion-reduce:transition-none ${isProfileMenuOpen ? 'rotate-180' : ''}`}
+                className={`hidden sm:block text-gray-400 transition-transform duration-200 motion-reduce:transition-none ${isProfileMenuOpen ? 'rotate-180' : ''}`}
               />
             </button>
 
