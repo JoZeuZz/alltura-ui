@@ -14,6 +14,14 @@ export type { NotificationBellProps } from './components/NotificationBell';
 export { default as NotificationItem } from './components/NotificationItem';
 export type { NotificationItemProps } from './components/NotificationItem';
 export { default as TourOverlay } from './components/TourOverlay';
+export { default as Button } from './components/Button';
+export type { ButtonProps, ButtonVariant, ButtonSize } from './components/Button';
+export { default as StatusBadge } from './components/StatusBadge';
+export type { StatusBadgeProps, StatusVariant } from './components/StatusBadge';
+export { default as PageHeader } from './components/PageHeader';
+export type { PageHeaderProps } from './components/PageHeader';
+export { default as EmptyState } from './components/EmptyState';
+export type { EmptyStateProps } from './components/EmptyState';
 
 // Layout
 export { default as AppLayout } from './layout/AppLayout';
