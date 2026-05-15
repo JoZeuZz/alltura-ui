@@ -406,6 +406,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
               className={`p-[var(--shell-header-bell-p)] sm:p-[var(--shell-header-bell-p-sm)] rounded-lg hover:bg-surface-overlay transition-colors duration-150`}
               data-tour="app-shell-notifications"
             >
+              {/* NotificationBell renders its own focusable button with focus ring */}
               {notificationBell}
             </div>
 
