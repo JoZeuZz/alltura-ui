@@ -151,6 +151,7 @@ export default function Modal({
               </div>
             </>
           ) : (
+            {/* Single child required — useElasticScroll targets firstElementChild of the panel for the transform */}
             <div>
               <div className={headerCls}>
                 {showInternalTitle && (
