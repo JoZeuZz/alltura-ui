@@ -157,6 +157,19 @@ describe('useElasticScroll', () => {
     expect(() => renderHook(() => useElasticScroll(ref))).not.toThrow();
   });
 
+  it('does not apply shift when document.body.overflow is hidden (modal open)', () => {
+    const { container, inner } = createContainer({ scrollTop: 200, clientHeight: 100, scrollHeight: 300 });
+    const ref = makeRef(container);
+
+    renderHook(() => useElasticScroll(ref));
+    document.body.style.overflow = 'hidden';
+    dispatchWheel(container, 100);
+
+    expect(inner.style.transform).toBe('');
+
+    document.body.style.overflow = '';
+  });
+
   it('sets overscroll-behavior-y to contain on the container', () => {
     const { container } = createContainer({ scrollTop: 0, clientHeight: 100, scrollHeight: 300 });
     const ref = makeRef(container);

@@ -42,6 +42,7 @@ export function useElasticScroll<T extends HTMLElement>(
     }
 
     function handleWheel(e: WheelEvent): void {
+      if (document.body.style.overflow === 'hidden') return;
       const atTop = container!.scrollTop <= 0;
       const atBottom = container!.scrollTop + container!.clientHeight >= container!.scrollHeight - 1;
       if (e.deltaY < 0 && atTop) applyElastic(e.deltaY);
@@ -53,6 +54,7 @@ export function useElasticScroll<T extends HTMLElement>(
     }
 
     function handleTouchEnd(e: TouchEvent): void {
+      if (document.body.style.overflow === 'hidden') return;
       const dy = touchStartY - e.changedTouches[0].clientY;
       const atTop = container!.scrollTop <= 0;
       const atBottom = container!.scrollTop + container!.clientHeight >= container!.scrollHeight - 1;
