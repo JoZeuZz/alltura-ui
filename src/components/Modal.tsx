@@ -11,6 +11,8 @@ interface ModalProps {
   titleId?: string;
   /** External element id for aria-describedby — skips rendering internal sr-only <p> */
   descriptionId?: string;
+  /** When true, expands to full viewport height on mobile (< sm) with header pinned and content scrollable. Desktop behavior unchanged. Use on complex/long forms. */
+  mobileFullscreen?: boolean;
 }
 
 export default function Modal({
@@ -21,6 +23,7 @@ export default function Modal({
   description,
   titleId: externalTitleId,
   descriptionId: externalDescId,
+  mobileFullscreen = false,
 }: ModalProps) {
   const previousActiveElement = useRef<HTMLElement | null>(null);
   const dialogPanelRef = useRef<HTMLDivElement | null>(null);
@@ -64,6 +67,17 @@ export default function Modal({
   const effectiveTitleId = externalTitleId ?? (title ? internalTitleId : undefined);
   const effectiveDescId  = externalDescId  ?? (description ? internalDescId : undefined);
   const showInternalTitle = title && !externalTitleId;
+  const headerJustify = showInternalTitle ? 'justify-between' : 'justify-end';
+
+  const backdropCls = `fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-center items-center animate-backdrop-in ${mobileFullscreen ? 'p-0 sm:p-4' : 'p-4'}`;
+
+  const panelCls = mobileFullscreen
+    ? 'bg-surface w-full animate-modal-in flex flex-col overflow-hidden rounded-none h-[100dvh] sm:rounded-2xl sm:h-auto sm:max-h-[85vh] sm:max-w-4xl sm:shadow-modal'
+    : 'bg-surface p-4 sm:p-6 md:p-8 rounded-2xl shadow-modal w-full max-w-4xl max-h-[90vh] sm:max-h-[85vh] overflow-y-auto animate-modal-in';
+
+  const headerCls = mobileFullscreen
+    ? `flex items-center flex-shrink-0 ${headerJustify} px-4 pt-4 pb-3 sm:px-6 sm:pt-6 sm:pb-2 md:px-8 md:pt-8`
+    : `flex items-center mb-2 ${headerJustify}`;
 
   return (
     <FocusTrap
@@ -87,7 +101,7 @@ export default function Modal({
       }}
     >
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-center items-center p-4 animate-backdrop-in"
+        className={backdropCls}
         onClick={(event) => {
           if (event.target === event.currentTarget) onClose();
         }}
@@ -98,11 +112,11 @@ export default function Modal({
           aria-modal="true"
           aria-labelledby={effectiveTitleId}
           aria-describedby={effectiveDescId}
-          className="bg-surface p-4 sm:p-6 md:p-8 rounded-2xl shadow-modal w-full max-w-4xl max-h-[90vh] sm:max-h-[85vh] overflow-y-auto animate-modal-in"
+          className={panelCls}
           onClick={(e) => e.stopPropagation()}
           tabIndex={-1}
         >
-          <div className={`flex items-center mb-2 ${showInternalTitle ? 'justify-between' : 'justify-end'}`}>
+          <div className={headerCls}>
             {showInternalTitle && (
               <h2 id={internalTitleId} className="heading-4 text-content-primary">
                 {title}
@@ -122,7 +136,11 @@ export default function Modal({
           {description && !externalDescId && (
             <p id={internalDescId} className="sr-only">{description}</p>
           )}
-          {children}
+          {mobileFullscreen ? (
+            <div className="flex-1 overflow-y-auto px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:px-6 sm:pb-6 md:px-8 md:pb-8">
+              {children}
+            </div>
+          ) : children}
         </div>
       </div>
     </FocusTrap>
