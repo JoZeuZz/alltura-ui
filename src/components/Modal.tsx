@@ -11,7 +11,7 @@ interface ModalProps {
   titleId?: string;
   /** External element id for aria-describedby — skips rendering internal sr-only <p> */
   descriptionId?: string;
-  /** When true, expands to full viewport height on mobile (< sm) with header pinned and content scrollable. Desktop behavior unchanged. Use on complex/long forms. */
+  /** When true, opens as a bottom sheet on mobile (< sm) covering up to 95dvh with header pinned and content scrollable. Desktop behavior unchanged. Use on complex/long forms. */
   mobileFullscreen?: boolean;
 }
 
@@ -69,10 +69,10 @@ export default function Modal({
   const showInternalTitle = title && !externalTitleId;
   const headerJustify = showInternalTitle ? 'justify-between' : 'justify-end';
 
-  const backdropCls = `fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-center items-center animate-backdrop-in ${mobileFullscreen ? 'p-0 sm:p-4' : 'p-4'}`;
+  const backdropCls = `fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-center animate-backdrop-in ${mobileFullscreen ? 'items-end p-0 sm:items-center sm:p-4' : 'items-center p-4'}`;
 
   const panelCls = mobileFullscreen
-    ? 'bg-surface w-full animate-modal-in flex flex-col overflow-hidden rounded-none h-[100dvh] sm:rounded-2xl sm:h-auto sm:max-h-[85vh] sm:max-w-4xl sm:shadow-modal'
+    ? 'bg-surface w-full animate-modal-in flex flex-col overflow-hidden rounded-t-2xl max-h-[95dvh] shadow-modal sm:rounded-2xl sm:max-h-[85vh] sm:max-w-4xl'
     : 'bg-surface p-4 sm:p-6 md:p-8 rounded-2xl shadow-modal w-full max-w-4xl max-h-[90vh] sm:max-h-[85vh] overflow-y-auto animate-modal-in';
 
   const headerCls = mobileFullscreen
@@ -137,7 +137,7 @@ export default function Modal({
             <p id={internalDescId} className="sr-only">{description}</p>
           )}
           {mobileFullscreen ? (
-            <div className="flex-1 overflow-y-auto px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:px-6 sm:pb-6 md:px-8 md:pb-8">
+            <div className="flex-1 overflow-y-auto px-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:px-6 sm:pb-6 md:px-8 md:pb-8">
               {children}
             </div>
           ) : children}
