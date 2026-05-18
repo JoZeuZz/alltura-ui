@@ -1,21 +1,56 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+/**
+ * Defines a single column in a `ResponsiveTable`.
+ * @template T - The row data type.
+ */
 export interface TableColumn<T = any> {
+  /** Property key on the row object. Supports dot notation for nested properties (e.g. `"address.city"`). */
   key: keyof T | string;
+  /** Column header label displayed in `<th>`. */
   header: string;
+  /** Custom render function. Receives the cell value, full row, and row index. */
   render?: (value: any, row: T, index: number) => React.ReactNode;
+  /** Additional CSS classes applied to both `<th>` and `<td>`. */
   className?: string;
+  /** Hide this column on mobile (`< md`). Shows on `md+`. */
   hideOnMobile?: boolean;
+  /** Hide this column on tablet (`< lg`). Shows on `lg+`. */
   hideOnTablet?: boolean;
+  /** Text alignment for the column. Defaults to `left`. */
   align?: 'left' | 'center' | 'right';
 }
 
+/** Represents a single action item in the mobile kebab (⋮) dropdown menu. */
 export interface KebabAction {
+  /** Display label shown in the dropdown. */
   label: string;
+  /** Callback fired when the action is tapped. The dropdown closes automatically. */
   onClick: () => void;
+  /** Visual style variant for the item. Defaults to `'default'`. */
   variant?: 'default' | 'danger' | 'primary';
 }
 
+/**
+ * Props for `ResponsiveTable`.
+ * @template T - The row data type.
+ *
+ * @example
+ * ```tsx
+ * <ResponsiveTable
+ *   columns={[
+ *     { key: 'name', header: 'Nombre' },
+ *     { key: 'status', header: 'Estado', hideOnMobile: true },
+ *     { key: 'actions', header: 'Acciones', hideOnMobile: true, render: (_, row) => <button>Editar</button> },
+ *   ]}
+ *   data={workers}
+ *   mobileKebab={(row) => [
+ *     { label: 'Editar', onClick: () => handleEdit(row) },
+ *     { label: 'Eliminar', onClick: () => handleDelete(row), variant: 'danger' },
+ *   ]}
+ * />
+ * ```
+ */
 export interface ResponsiveTableProps<T = any> {
   columns: TableColumn<T>[];
   data: T[];
@@ -26,6 +61,14 @@ export interface ResponsiveTableProps<T = any> {
   getRowKey?: (row: T, index: number) => string | number;
   loading?: boolean;
   emptyMessage?: string;
+  /**
+   * When provided, renders a ⋮ kebab button on mobile (`< md`) at the end of each row.
+   * Clicking the button opens a dropdown with the returned actions.
+   * Hidden on `md+` — desktop shows the normal action columns instead.
+   *
+   * @param row - The row data object.
+   * @param index - The row index.
+   */
   mobileKebab?: (row: T, index: number) => KebabAction[];
 }
 
@@ -62,6 +105,8 @@ export function ResponsiveTable<T = any>({
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [openKebabIndex]);
+
+  useEffect(() => { setOpenKebabIndex(null); }, [data]);
 
   const getCellValue = (row: T, key: string | keyof T): any => {
     if (typeof key === 'string' && key.includes('.')) {
@@ -171,8 +216,7 @@ export function ResponsiveTable<T = any>({
                           if (el) kebabCellRefs.current.set(rowIndex, el);
                           else kebabCellRefs.current.delete(rowIndex);
                         }}
-                        className="md:hidden px-2 py-3 border-b border-edge bg-surface relative"
-                        style={{ width: 48 }}
+                        className="md:hidden px-2 py-3 border-b border-edge bg-surface relative w-12"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <button
