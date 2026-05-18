@@ -20,6 +20,8 @@ export { default as StatusBadge } from './components/StatusBadge';
 export type { StatusBadgeProps, StatusVariant } from './components/StatusBadge';
 export { default as PageHeader } from './components/PageHeader';
 export type { PageHeaderProps } from './components/PageHeader';
+export { default as PageTabs } from './components/PageTabs';
+export type { PageTabsProps, PageTab } from './components/PageTabs';
 export { default as EmptyState } from './components/EmptyState';
 export type { EmptyStateProps } from './components/EmptyState';
 export { ElasticScrollArea } from './components/ElasticScrollArea';
