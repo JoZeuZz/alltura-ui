@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useId, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useElasticScroll } from '../hooks/useElasticScroll';
 import FocusTrap from 'focus-trap-react';
 
@@ -84,7 +85,7 @@ export default function Modal({
     ? `flex items-center flex-shrink-0 ${headerJustify} px-4 pt-4 pb-3 sm:px-6 sm:pt-6 sm:pb-2 md:px-8 md:pt-8`
     : `flex items-center mb-2 ${headerJustify}`;
 
-  return (
+  return createPortal(
     <FocusTrap
       focusTrapOptions={{
         initialFocus: () => {
@@ -177,6 +178,7 @@ export default function Modal({
           )}
         </div>
       </div>
-    </FocusTrap>
+    </FocusTrap>,
+    document.body
   );
 }
