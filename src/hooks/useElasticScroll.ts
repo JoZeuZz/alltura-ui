@@ -26,6 +26,7 @@ export function useElasticScroll<T extends HTMLElement>(
 
     let isAnimating = false;
     let touchStartY = 0;
+    let animationTimerId = 0;
 
     function applyElastic(delta: number): void {
       if (isAnimating) return;
@@ -36,7 +37,7 @@ export function useElasticScroll<T extends HTMLElement>(
       window.requestAnimationFrame(() => {
         inner!.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
         inner!.style.transform = 'translateY(0)';
-        setTimeout(() => { isAnimating = false; }, 520);
+        animationTimerId = setTimeout(() => { isAnimating = false; }, 520) as unknown as number;
       });
     }
 
@@ -64,6 +65,7 @@ export function useElasticScroll<T extends HTMLElement>(
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
+      clearTimeout(animationTimerId);
       container.style.overscrollBehaviorY = '';
       container.removeEventListener('wheel', handleWheel);
       container.removeEventListener('touchstart', handleTouchStart);
