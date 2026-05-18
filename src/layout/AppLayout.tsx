@@ -521,7 +521,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
         </header>
 
         {/* Main content */}
-        <main id="main-content" className="flex-1 w-full p-4 sm:p-6 lg:p-10 overflow-y-auto">
+        <main id="main-content" className="flex-1 w-full pt-4 px-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pt-6 sm:px-6 sm:pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] lg:pt-10 lg:px-10 lg:pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] overflow-y-auto">
           <Suspense fallback={
             <div className="flex items-center justify-center h-64" aria-label="Cargando contenido">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
