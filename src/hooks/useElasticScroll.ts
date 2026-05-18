@@ -37,7 +37,11 @@ export function useElasticScroll<T extends HTMLElement>(
       window.requestAnimationFrame(() => {
         inner!.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
         inner!.style.transform = 'translateY(0)';
-        animationTimerId = setTimeout(() => { isAnimating = false; }, 520) as unknown as number;
+        animationTimerId = setTimeout(() => {
+          inner!.style.transition = '';
+          inner!.style.transform = '';
+          isAnimating = false;
+        }, 520) as unknown as number;
       });
     }
 

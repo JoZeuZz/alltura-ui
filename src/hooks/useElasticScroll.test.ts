@@ -82,6 +82,23 @@ describe('useElasticScroll', () => {
     expect(inner.style.transform).toBe('translateY(0)');
   });
 
+  it('clears transform and transition fully after spring completes (no stacking context left)', () => {
+    const { container, inner } = createContainer({ scrollTop: 200, clientHeight: 100, scrollHeight: 300 });
+    const ref = makeRef(container);
+
+    renderHook(() => useElasticScroll(ref));
+    dispatchWheel(container, 100);
+    rafCallback!(0);
+
+    // Spring in flight — transform still set
+    expect(inner.style.transform).toBe('translateY(0)');
+
+    // After 520ms timeout fires, transform must be fully removed
+    vi.advanceTimersByTime(520);
+    expect(inner.style.transform).toBe('');
+    expect(inner.style.transition).toBe('');
+  });
+
   it('applies positive translateY shift on wheel at top boundary', () => {
     const { container, inner } = createContainer({ scrollTop: 0, clientHeight: 100, scrollHeight: 300 });
     const ref = makeRef(container);
