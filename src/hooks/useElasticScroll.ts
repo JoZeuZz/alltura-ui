@@ -6,7 +6,7 @@ export interface ElasticScrollOptions {
 }
 
 export function useElasticScroll<T extends HTMLElement>(
-  containerRef: RefObject<T>,
+  containerRef: RefObject<T | null>,
   options: ElasticScrollOptions = {}
 ): void {
   const { maxDisplacement = 14, disabled = false } = options;
