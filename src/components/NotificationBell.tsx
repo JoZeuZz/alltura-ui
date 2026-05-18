@@ -228,12 +228,12 @@ export default function NotificationBell({
               role="dialog"
               aria-modal="true"
               aria-labelledby={headingId}
-              className="fixed inset-0 z-50 bg-surface flex flex-col"
+              className="fixed bottom-0 left-0 right-0 z-50 max-h-[80dvh] bg-surface flex flex-col rounded-t-2xl shadow-modal"
             >
               {renderHeader()}
               <div className="flex-1 overflow-y-auto">{renderNotificationList()}</div>
               {previewNotifications.length > 0 && (
-                <div className="px-4 py-3 border-t border-edge bg-surface-muted flex-shrink-0">
+                <div className="px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] border-t border-edge bg-surface-muted flex-shrink-0">
                   <button onClick={handleViewAll} className="text-sm text-primary hover:text-primary-dark font-medium block text-center w-full">
                     Ver todas
                   </button>
