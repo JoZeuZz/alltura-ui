@@ -52,14 +52,23 @@ export interface KebabAction {
  * ```
  */
 export interface ResponsiveTableProps<T = any> {
+  /** Column definitions. */
   columns: TableColumn<T>[];
+  /** Row data array. */
   data: T[];
+  /** Accessible caption read by screen readers (rendered as `sr-only`). */
   caption?: string;
+  /** Additional CSS classes applied to the outer container. */
   className?: string;
+  /** Callback fired when a row is clicked. Makes rows appear clickable. */
   onRowClick?: (row: T, index: number) => void;
+  /** Returns additional CSS classes for a given row. */
   rowClassName?: (row: T, index: number) => string;
+  /** Returns a stable React key for a given row. Defaults to row index. */
   getRowKey?: (row: T, index: number) => string | number;
+  /** Show a loading spinner overlay instead of data. */
   loading?: boolean;
+  /** Message shown when `data` is empty. */
   emptyMessage?: string;
   /**
    * When provided, renders a ⋮ kebab button on mobile (`< md`) at the end of each row.
