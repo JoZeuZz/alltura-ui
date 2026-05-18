@@ -229,11 +229,11 @@ export function ResponsiveTable<T = any>({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <button
-                          aria-label="Opciones"
+                          aria-label={`Opciones de fila ${rowIndex + 1}`}
                           aria-expanded={isOpen}
                           aria-haspopup="menu"
                           onClick={() => setOpenKebabIndex(isOpen ? null : rowIndex)}
-                          className="flex items-center justify-center w-8 h-8 rounded-lg text-content-muted hover:text-content-primary hover:bg-surface-overlay transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
+                          className="flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg text-content-muted hover:text-content-primary hover:bg-surface-overlay transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
                         >
                           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                             <circle cx="10" cy="4" r="1.5" />
@@ -250,7 +250,7 @@ export function ResponsiveTable<T = any>({
                           >
                             {mobileKebab(row, rowIndex).map((action, actionIdx) => (
                               <button
-                                key={actionIdx}
+                                key={action.label ?? actionIdx}
                                 role="menuitem"
                                 onClick={() => { action.onClick(); setOpenKebabIndex(null); }}
                                 className={`w-full text-left px-4 py-2.5 text-sm transition-colors focus-visible:outline-none focus-visible:bg-surface-overlay min-h-[44px] flex items-center ${kebabVariantCls(action.variant)}`}
