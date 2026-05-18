@@ -8,6 +8,7 @@ import TourOverlay from '../components/TourOverlay';
 import type { TourRole } from '../utils/tourSteps';
 import { getContextualStepsForRoute } from '../utils/tourSteps';
 import { useBreakpoints } from '../hooks/useBreakpoints';
+import { useElasticScroll } from '../hooks/useElasticScroll';
 import { formatNameParts } from '../utils/name';
 
 // --- Icons ---
@@ -93,7 +94,12 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
   const hasAutoStartedTour = useRef(false);
   const autoOpenedSidebar = useRef(false);
   const guideTimeoutRef = useRef<number | null>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  const sidebarNavRef = useRef<HTMLDivElement>(null);
   const currentTourRole = toTourRole(user?.role);
+
+  useElasticScroll(mainRef, { maxDisplacement: 14 });
+  useElasticScroll(sidebarNavRef, { maxDisplacement: 8 });
 
   // Auto-start tour on first visit
   useEffect(() => {
@@ -311,8 +317,13 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
           </div>
 
           {/* Nav links */}
-          <div className="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto overflow-x-hidden scrollbar-thin">
-            {navItems.map((item, i) => renderNavItem(item, i))}
+          <div
+            ref={sidebarNavRef}
+            className="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto overflow-x-hidden scrollbar-thin"
+          >
+            <div>
+              {navItems.map((item, i) => renderNavItem(item, i))}
+            </div>
           </div>
 
           {/* Guide / Tour launcher */}
@@ -521,14 +532,20 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
         </header>
 
         {/* Main content */}
-        <main id="main-content" className="flex-1 w-full pt-4 px-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pt-6 sm:px-6 sm:pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] lg:pt-10 lg:px-10 lg:pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] overflow-y-auto">
-          <Suspense fallback={
-            <div className="flex items-center justify-center h-64" aria-label="Cargando contenido">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
-            </div>
-          }>
-            <Outlet key={location.pathname} />
-          </Suspense>
+        <main
+          id="main-content"
+          ref={mainRef}
+          className="flex-1 w-full pt-4 px-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pt-6 sm:px-6 sm:pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] lg:pt-10 lg:px-10 lg:pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] overflow-y-auto"
+        >
+          <div>
+            <Suspense fallback={
+              <div className="flex items-center justify-center h-64" aria-label="Cargando contenido">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
+              </div>
+            }>
+              <Outlet key={location.pathname} />
+            </Suspense>
+          </div>
         </main>
       </div>
 
