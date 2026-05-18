@@ -31,7 +31,7 @@ export type { ContainerProps, SectionProps, ContainerVariant } from './layout/Co
 export { ResponsiveGrid, CustomGrid } from './layout/ResponsiveGrid';
 export type { ResponsiveGridProps, CustomGridProps, GridVariant, GridGap } from './layout/ResponsiveGrid';
 export { default as ResponsiveTable } from './layout/ResponsiveTable';
-export type { ResponsiveTableProps, TableColumn } from './layout/ResponsiveTable';
+export type { ResponsiveTableProps, TableColumn, KebabAction } from './layout/ResponsiveTable';
 
 // Context
 export { AuthProvider } from './context/AuthContext';
