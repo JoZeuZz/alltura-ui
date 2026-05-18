@@ -22,6 +22,8 @@ export { default as PageHeader } from './components/PageHeader';
 export type { PageHeaderProps } from './components/PageHeader';
 export { default as EmptyState } from './components/EmptyState';
 export type { EmptyStateProps } from './components/EmptyState';
+export { ElasticScrollArea } from './components/ElasticScrollArea';
+export type { ElasticScrollAreaProps } from './components/ElasticScrollArea';
 
 // Layout
 export { default as AppLayout } from './layout/AppLayout';
@@ -46,6 +48,8 @@ export { useAuth } from './hooks/useAuth';
 export { useTour } from './hooks/useTour';
 export { useBreakpoints } from './hooks/useBreakpoints';
 export { useMediaQuery } from './hooks/useMediaQuery';
+export { useElasticScroll } from './hooks/useElasticScroll';
+export type { ElasticScrollOptions } from './hooks/useElasticScroll';
 
 // Services
 export * from './services/authRefresh';
