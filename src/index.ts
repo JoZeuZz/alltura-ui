@@ -26,6 +26,7 @@ export { default as EmptyState } from './components/EmptyState';
 export type { EmptyStateProps } from './components/EmptyState';
 export { ElasticScrollArea } from './components/ElasticScrollArea';
 export type { ElasticScrollAreaProps } from './components/ElasticScrollArea';
+export { GlobalStyles } from './components/GlobalStyles';
 
 // Layout
 export { default as AppLayout } from './layout/AppLayout';
