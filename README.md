@@ -2,28 +2,17 @@
 
 Shared UI package for Alltura apps — layout, auth, notifications, tour.
 
-Published to [GitHub Packages](https://github.com/JoZeuZz/alltura-ui/packages).
+Published to [npm](https://www.npmjs.com/package/@jozeuZz/alltura-ui).
 
 ## Installation
 
-### 1. Configure registry
-
-Add to `.npmrc` in your project root (or `~/.npmrc` for global):
-
-```
-@jozeuZz:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=ghp_YOUR_TOKEN
-```
-
-Generate a token at: GitHub → Settings → Developer settings → Personal access tokens → permissions: `read:packages`
-
-### 2. Install
+No token or `.npmrc` configuration needed — package is public.
 
 ```bash
 npm install @jozeuZz/alltura-ui
 ```
 
-### 3. Configure Tailwind (if applicable)
+### Configure Tailwind (if applicable)
 
 Add to `tailwind.config.js` content:
 
@@ -33,20 +22,11 @@ Add to `tailwind.config.js` content:
 
 ## CI / CD (Coolify or any Docker-based pipeline)
 
-The consumer app must commit an `.npmrc` with an env-var token reference (no secret in source):
-
-```
-@jozeuZz:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
-```
-
-Then add `NODE_AUTH_TOKEN=<ghp_token>` as an environment variable in Coolify (or equivalent CI secret). The token needs `read:packages` scope.
+No auth required. `npm ci` works without any `.npmrc` or secrets.
 
 **Do not** use `file:../../alltura-ui` in `package.json` for deployed apps — the path does not exist inside the Docker build context and will cause `npm ci` to fail.
 
 ## Local development (monorepo)
-
-`herramientas/frontend` uses the registry version (`^1.0.x`) everywhere, including locally. The global `~/.npmrc` provides the auth token for local installs.
 
 To work on `alltura-ui` source and see changes live without publishing, use npm link:
 
@@ -63,6 +43,8 @@ Vitest resolves directly to source for per-module mocking (unchanged):
 ```
 
 ## Publishing a new version
+
+Requires `npm login` (one time, with your npmjs.com account).
 
 ```bash
 cd /home/proyectos/alltura-ui
