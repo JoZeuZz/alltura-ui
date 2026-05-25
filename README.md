@@ -1,15 +1,15 @@
-# @jozeuZz/alltura-ui
+# @jozeuzz/alltura-ui
 
 Shared UI package for Alltura apps — layout, auth, notifications, tour.
 
-Published to [npm](https://www.npmjs.com/package/@jozeuZz/alltura-ui).
+Published to [npm](https://www.npmjs.com/package/@jozeuzz/alltura-ui).
 
 ## Installation
 
 No token or `.npmrc` configuration needed — package is public.
 
 ```bash
-npm install @jozeuZz/alltura-ui
+npm install @jozeuzz/alltura-ui
 ```
 
 ### Configure Tailwind (if applicable)
@@ -17,7 +17,7 @@ npm install @jozeuZz/alltura-ui
 Add to `tailwind.config.js` content:
 
 ```js
-"./node_modules/@jozeuZz/alltura-ui/src/**/*.{js,jsx,ts,tsx}"
+"./node_modules/@jozeuzz/alltura-ui/src/**/*.{js,jsx,ts,tsx}"
 ```
 
 ## CI / CD (Coolify or any Docker-based pipeline)
@@ -32,14 +32,14 @@ To work on `alltura-ui` source and see changes live without publishing, use npm 
 
 ```bash
 cd /home/proyectos/alltura-ui && npm link
-cd /home/proyectos/herramientas/frontend && npm link @jozeuZz/alltura-ui
+cd /home/proyectos/herramientas/frontend && npm link @jozeuzz/alltura-ui
 ```
 
 Vitest resolves directly to source for per-module mocking (unchanged):
 
 ```ts
 // frontend/vite.config.ts (test.alias)
-'@jozeuZz/alltura-ui': path.resolve(__dirname, '../../alltura-ui/src/index.ts')
+'@jozeuzz/alltura-ui': path.resolve(__dirname, '../../alltura-ui/src/index.ts')
 ```
 
 ## Publishing a new version

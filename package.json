@@ -1,5 +1,5 @@
 {
-  "name": "@jozeuZz/alltura-ui",
+  "name": "@jozeuzz/alltura-ui",
   "version": "1.1.9",
   "description": "Alltura shared UI — layout, auth, notifications, tour",
   "main": "./dist/alltura-ui.mjs",
