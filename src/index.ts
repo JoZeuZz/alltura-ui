@@ -49,6 +49,7 @@ export * from './context/tourContext.shared';
 // Hooks
 export { useAuth } from './hooks/useAuth';
 export { useTour } from './hooks/useTour';
+export { useTourActions } from './hooks/useTourActions';
 export { useBreakpoints } from './hooks/useBreakpoints';
 export { useMediaQuery } from './hooks/useMediaQuery';
 export { useElasticScroll } from './hooks/useElasticScroll';
