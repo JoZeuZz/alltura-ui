@@ -52,16 +52,13 @@ describe('useTourActions', () => {
     const secondHandler = vi.fn();
     mockUseTour('my-action');
     const { rerender } = renderHook(
-      ({ handler }) => useTourActions({ 'my-action': handler }),
-      { initialProps: { handler: firstHandler } }
+      ({ map }) => useTourActions(map),
+      { initialProps: { map: { 'my-action': firstHandler } as Record<string, () => void> } }
     );
     expect(firstHandler).toHaveBeenCalledOnce();
 
-    // simulate new action on rerender
     mockUseTour('my-action-2');
-    const secondMap = { 'my-action-2': secondHandler };
-    rerender({ handler: secondHandler });
-    // secondHandler called because currentDemoAction changed
+    rerender({ map: { 'my-action-2': secondHandler } });
     expect(secondHandler).toHaveBeenCalledOnce();
   });
 });
