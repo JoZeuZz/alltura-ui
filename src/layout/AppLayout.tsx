@@ -392,7 +392,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell, onLogoClick }: AppLayo
             src={logoSrc}
             alt="Alltura"
             data-tour="app-shell-logo"
-            onClick={onLogoClick}
+            onClick={showHeaderLogo ? onLogoClick : undefined}
             aria-hidden={!showHeaderLogo}
             className={`h-8 w-auto max-w-[180px] flex-shrink-0 object-contain transition-[opacity,transform,max-width] duration-300 ease-in-out motion-reduce:transition-none ${
               showHeaderLogo
