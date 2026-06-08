@@ -69,9 +69,10 @@ interface AppLayoutProps {
   navItems: NavItem[];
   logoSrc: string;
   notificationBell?: ReactNode;
+  onLogoClick?: () => void;
 }
 
-const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
+const AppLayout = ({ navItems, logoSrc, notificationBell, onLogoClick }: AppLayoutProps) => {
   const { user, logout } = useAuth();
   const { startOnboarding, startContextual, isActive, steps, stepIndex } = useTour();
   const { isMobile } = useBreakpoints();
@@ -241,7 +242,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
   };
 
   return (
-    <div className="flex h-screen bg-surface-muted font-sans">
+    <div className="flex h-screen overflow-hidden bg-surface-muted font-sans">
       {/* Skip to main content */}
       <a
         href="#main-content"
@@ -300,7 +301,9 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
               <img
                 src={logoSrc}
                 alt="Alltura"
+                onClick={onLogoClick}
                 className="h-9 w-auto max-w-[180px] flex-shrink-0 object-contain"
+                style={onLogoClick ? { cursor: 'pointer' } : undefined}
               />
             </div>
             {/* Desktop sidebar toggle */}
@@ -389,6 +392,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
             src={logoSrc}
             alt="Alltura"
             data-tour="app-shell-logo"
+            onClick={onLogoClick}
             aria-hidden={!showHeaderLogo}
             className={`h-8 w-auto max-w-[180px] flex-shrink-0 object-contain transition-[opacity,transform,max-width] duration-300 ease-in-out motion-reduce:transition-none ${
               showHeaderLogo
@@ -400,6 +404,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell }: AppLayoutProps) => {
               transitionDelay: showHeaderLogo && !isMobile
                 ? 'var(--shell-logo-handoff-enter-delay-desktop)'
                 : '0ms',
+              ...(onLogoClick ? { cursor: 'pointer' } : {}),
             }}
           />
 
