@@ -55,12 +55,16 @@ export default function Modal({
       }
     };
 
+    const mainEl = document.getElementById('main-content') as HTMLElement | null;
+
     window.addEventListener('keydown', handleEsc);
     document.body.style.overflow = 'hidden';
+    if (mainEl) mainEl.style.overflowY = 'hidden';
 
     return () => {
       window.removeEventListener('keydown', handleEsc);
       document.body.style.overflow = '';
+      if (mainEl) mainEl.style.overflowY = '';
 
       if (previousActiveElement.current && typeof previousActiveElement.current.focus === 'function') {
         previousActiveElement.current.focus();
