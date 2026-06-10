@@ -242,7 +242,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell, onLogoClick }: AppLayo
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-surface-muted font-sans">
+    <div className="flex h-dvh overflow-hidden bg-surface-muted font-sans">
       {/* Skip to main content */}
       <a
         href="#main-content"
@@ -540,7 +540,7 @@ const AppLayout = ({ navItems, logoSrc, notificationBell, onLogoClick }: AppLayo
         <main
           id="main-content"
           ref={mainRef}
-          className="flex-1 w-full pt-4 px-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pt-6 sm:px-6 sm:pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] lg:pt-10 lg:px-10 lg:pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] overflow-y-auto"
+          className="flex-1 w-full pt-4 px-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] sm:pt-6 sm:px-6 sm:pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] lg:pt-10 lg:px-10 lg:pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] overflow-y-auto overflow-x-hidden"
         >
           <div>
             <Suspense fallback={
