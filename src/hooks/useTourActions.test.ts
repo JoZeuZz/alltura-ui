@@ -13,6 +13,7 @@ const mockUseTour = (currentDemoAction: string | null) => {
     currentDemoAction,
     startOnboarding: vi.fn(),
     startContextual: vi.fn(),
+    startContextualForRoute: vi.fn(),
     stop: vi.fn(),
     next: vi.fn(),
     prev: vi.fn(),
