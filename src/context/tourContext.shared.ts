@@ -13,6 +13,7 @@ export interface TourContextValue {
   currentDemoAction: string | null;
   startOnboarding: (role: TourRole, options?: { force?: boolean }) => boolean;
   startContextual: (role: TourRole, steps: TourStep[]) => boolean;
+  startContextualForRoute: (role: TourRole, pathname: string) => boolean;
   stop: (reason?: StopReason) => void;
   next: () => void;
   prev: () => void;

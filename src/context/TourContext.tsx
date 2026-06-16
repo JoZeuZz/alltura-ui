@@ -1,16 +1,17 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { TourRole, TourStep } from '../utils/tourSteps';
+import { TourRole, TourStep, matchTourRoute } from '../utils/tourSteps';
 import { StopReason, TourMode, TourContext } from './tourContext.shared';
 
 interface TourProviderProps {
   children: React.ReactNode;
   steps: Record<string, TourStep[]>;
+  contextualSteps?: Record<string, TourStep[]>;
   version: string;
 }
 
 const storageKeyFor = (role: TourRole, version: string) => `tour:${role}:${version}`;
 
-export const TourProvider: React.FC<TourProviderProps> = ({ children, steps: stepsByRole, version }) => {
+export const TourProvider: React.FC<TourProviderProps> = ({ children, steps: stepsByRole, contextualSteps = {}, version }) => {
   const [role, setRole] = useState<TourRole | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
   const [isActive, setIsActive] = useState(false);
@@ -42,6 +43,13 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children, steps: ste
     setIsActive(true);
     return true;
   }, []);
+
+  const startContextualForRoute = useCallback((nextRole: TourRole, pathname: string) => {
+    const candidates = contextualSteps[nextRole] || [];
+    const matched = candidates.filter((s) => matchTourRoute(pathname, s.route));
+    if (matched.length === 0) return false;
+    return startContextual(nextRole, matched);
+  }, [contextualSteps, startContextual]);
 
   const stop = useCallback((reason: StopReason = 'dismissed') => {
     if (role && mode === 'onboarding') {
@@ -87,13 +95,14 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children, steps: ste
       currentDemoAction: isActive ? (steps[stepIndex]?.demoAction ?? null) : null,
       startOnboarding,
       startContextual,
+      startContextualForRoute,
       stop,
       next,
       prev,
       goTo,
       restart,
     }),
-    [isActive, role, steps, stepIndex, mode, startOnboarding, startContextual, stop, next, prev, goTo, restart]
+    [isActive, role, steps, stepIndex, mode, startOnboarding, startContextual, startContextualForRoute, stop, next, prev, goTo, restart]
   );
 
   return <TourContext.Provider value={value}>{children}</TourContext.Provider>;
