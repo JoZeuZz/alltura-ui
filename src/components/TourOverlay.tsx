@@ -124,7 +124,7 @@ const TourOverlay: React.FC = () => {
     return null;
   }
 
-  const highlightPadding = step.highlightPadding ?? 8;
+  const highlightPadding = step.highlightPadding ?? 6;
   const hasTarget = Boolean(targetRect);
   const showTooltip = allowTooltip && (!waitingForTarget || fallbackEnabled);
   const mobilePlacement = step.mobilePlacement || 'bottom';
@@ -219,11 +219,20 @@ const TourOverlay: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-[1000]">
+      <style>{`
+        @media (prefers-reduced-motion: no-preference) {
+          @keyframes tourPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.45), 0 0 0 9999px rgba(0,0,0,0.22); }
+            50% { box-shadow: 0 0 0 4px rgba(255,255,255,0.18), 0 0 0 9999px rgba(0,0,0,0.22); }
+          }
+          .tour-highlight-pulse { animation: tourPulse 1.8s ease-in-out infinite; }
+        }
+      `}</style>
       <div className={`absolute inset-0 transition-opacity duration-200 ${overlayClass}`} />
 
       {highlightStyle && (
         <div
-          className="absolute rounded-2xl border-2 border-white/80 shadow-[0_0_0_9999px_rgba(0,0,0,0.22)] pointer-events-none transition-all duration-200"
+          className="absolute rounded-2xl border-2 border-white/80 shadow-[0_0_0_9999px_rgba(0,0,0,0.22)] pointer-events-none transition-all duration-200 tour-highlight-pulse"
           style={highlightStyle}
         />
       )}
@@ -300,6 +309,18 @@ const TourOverlay: React.FC = () => {
           className="fixed max-w-sm bg-surface rounded-2xl shadow-modal p-5"
           style={tooltipStyle as React.CSSProperties}
         >
+          {hasTarget && step.placement !== 'center' && (
+            <span
+              aria-hidden="true"
+              className="absolute w-3 h-3 bg-surface rotate-45"
+              style={
+                step.placement === 'top' ? { bottom: -6, left: 24 }
+                : step.placement === 'left' ? { right: -6, top: 24 }
+                : step.placement === 'right' ? { left: -6, top: 24 }
+                : { top: -6, left: 24 }
+              }
+            />
+          )}
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-xs uppercase tracking-wide text-content-disabled">
