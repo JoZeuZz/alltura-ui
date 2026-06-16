@@ -6,7 +6,6 @@ import { useAuth } from '../hooks/useAuth';
 import { useTour } from '../hooks/useTour';
 import TourOverlay from '../components/TourOverlay';
 import type { TourRole } from '../utils/tourSteps';
-import { getContextualStepsForRoute } from '../utils/tourSteps';
 import { useBreakpoints } from '../hooks/useBreakpoints';
 import { useElasticScroll } from '../hooks/useElasticScroll';
 import { formatNameParts } from '../utils/name';
@@ -74,7 +73,7 @@ interface AppLayoutProps {
 
 const AppLayout = ({ navItems, logoSrc, notificationBell, onLogoClick }: AppLayoutProps) => {
   const { user, logout } = useAuth();
-  const { startOnboarding, startContextual, isActive, steps, stepIndex } = useTour();
+  const { startOnboarding, startContextualForRoute, isActive, steps, stepIndex } = useTour();
   const { isMobile } = useBreakpoints();
   const navigate = useNavigate();
   const location = useLocation();
@@ -338,21 +337,15 @@ const AppLayout = ({ navItems, logoSrc, notificationBell, onLogoClick }: AppLayo
               onMouseLeave={hideTooltip}
               onClick={() => {
                 if (guideTimeoutRef.current) window.clearTimeout(guideTimeoutRef.current);
-                const contextualSteps = getContextualStepsForRoute(
-                  currentTourRole || 'supervisor',
-                  location.pathname
-                );
-                if (contextualSteps.length === 0) {
-                  toast('Aún no hay una guía disponible para esta pantalla.');
-                  return;
-                }
+                const role = currentTourRole || 'supervisor';
+                const run = () => startContextualForRoute(role, location.pathname);
                 if (isMobile) {
                   setSidebarOpen(false);
                   guideTimeoutRef.current = window.setTimeout(() => {
-                    if (currentTourRole) startContextual(currentTourRole, contextualSteps);
+                    if (!run()) toast('Aún no hay una guía disponible para esta pantalla.');
                   }, 150);
                 } else {
-                  if (currentTourRole) startContextual(currentTourRole, contextualSteps);
+                  if (!run()) toast('Aún no hay una guía disponible para esta pantalla.');
                 }
               }}
               className={`w-full flex items-center gap-2 px-3 py-2.5 mt-1 rounded-lg text-gray-300
