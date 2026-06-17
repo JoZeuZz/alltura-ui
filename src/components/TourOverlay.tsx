@@ -218,7 +218,7 @@ const TourOverlay: React.FC = () => {
   const overlayClass = highlightStyle ? 'bg-black/15' : 'bg-black/30';
 
   return (
-    <div className="fixed inset-0 z-[1000]">
+    <div className="fixed inset-0 z-[1000]" data-tour-overlay>
       <style>{`
         @media (prefers-reduced-motion: no-preference) {
           @keyframes tourPulse {

@@ -3,6 +3,17 @@ import { createPortal } from 'react-dom';
 import { useElasticScroll } from '../hooks/useElasticScroll';
 import FocusTrap from 'focus-trap-react';
 
+/**
+ * Permite que los clicks originados dentro del overlay del tour atraviesen el
+ * focus trap del modal sin desactivarlo. El TourOverlay se monta fuera del DOM
+ * del modal (z-index superior); sin esto, focus-trap cancela esos clicks y los
+ * controles de la guía quedan inertes mientras el modal está abierto.
+ */
+export const allowTourOverlayClicks = (event: MouseEvent | TouchEvent): boolean => {
+  const target = event.target as HTMLElement | null;
+  return Boolean(target?.closest?.('[data-tour-overlay]'));
+};
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -106,6 +117,7 @@ export default function Modal({
         },
         fallbackFocus: () => dialogPanelRef.current ?? document.body,
         clickOutsideDeactivates: false,
+        allowOutsideClick: allowTourOverlayClicks,
         escapeDeactivates: false,
         returnFocusOnDeactivate: false,
       }}
